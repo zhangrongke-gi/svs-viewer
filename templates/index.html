@@ -1,0 +1,85 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVS Viewer</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>SVS Viewer</h1>
+        
+        <div class="upload-section">
+            <input type="file" id="svsFile" accept=".svs">
+            <button id="uploadBtn">Upload SVS</button>
+        </div>
+        
+        <div class="viewer-container">
+            <div class="controls">
+                <div class="main-control-row">
+                <div class="zoom-controls">
+                    <button id="zoomIn">Zoom In (+)</button>
+                    <button id="zoomOut">Zoom Out (-)</button>
+                    <button id="resetZoom">Reset Zoom</button>
+                </div>
+                <div class="level-controls">
+                    <label for="levelSelect">Level:</label>
+                    <select id="levelSelect"></select>
+                </div>
+                <div class="pan-controls">
+                    <button id="panUp">↑</button>
+                    <button id="panLeft">←</button>
+                    <button id="panRight">→</button>
+                    <button id="panDown">↓</button>
+                </div>
+                </div>
+            </div>
+                
+                <div class="draw-controls">
+                    <button id="birdViewBtn">鸟瞰图</button> <!-- 新增按钮 -->
+                    <button id="toggleDraw">绘制轮廓</button>
+                    <button id="clearDraw">清空轮廓</button>
+                    <input type="color" id="drawColor" value="#ff0000">
+                    <label>粗细:</label>
+                    <input type="number" id="brushSize" min="1" max="20" value="2">
+                    <span id="modeIndicator" class="mode-indicator"></span>  <!-- 新增在此处 -->                    
+                    <button id="exportXML" class="export-right">导出XML</button>
+                </div>
+            </div>
+            
+            
+            <div class="image-container">
+                <canvas id="svsCanvas"></canvas>
+                <canvas id="drawCanvas"></canvas>
+            </div>
+            <!-- index.html 分组控件区域新增 -->
+            <div class="group-controls">
+                <button id="createGroup">新建分组</button>
+                <div id="groupList" class="group-list-container"></div>
+            </div>
+
+            <!-- 在viewer-container内添加 -->
+            <div class="overview-container">
+                <canvas id="overviewCanvas"></canvas>
+                <div id="viewportIndicator"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+    <!-- 在body结束前添加 -->
+    <div id="exportOverlay" class="export-overlay">
+        <div class="export-modal">
+            <div class="export-progress">
+                <div id="exportProgressBar"></div>
+                <span id="exportPercentage">0%</span>
+            </div>
+            <button id="exportCompleteBtn" class="export-complete-btn" disabled>完成</button>
+        </div>
+    </div>
+
+</body>
+</html>

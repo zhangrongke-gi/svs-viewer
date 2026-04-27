@@ -1,0 +1,534 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.upload-section {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.viewer-container {
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    border: 1px solid #ecf0f1;
+}
+/* 新增：主控制行 */
+.main-control-row {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+/* 新增：主控制行容器 */
+.controls > div:first-child {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 12px;
+}
+
+/* 修改位置：调整原有zoom-controls为左对齐容器 */
+.zoom-controls {
+    display: flex;
+    gap: 8px;
+    order: 1;
+}
+
+/* 修改位置：调整level-controls为居中容器 */
+.level-controls {
+    order: 2;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 修改位置：调整pan-controls为右对齐容器 */
+.pan-controls {
+    order: 3;
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.draw-controls {
+    display: flex; /* 新增flex布局 */
+    align-items: center; /* 垂直居中 */
+    justify-content: flex-start; /* 默认左对齐 */
+    flex-wrap: wrap; /* 允许换行 */
+    order: 4;
+    gap: 10px;
+    padding: 8px 12px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #dfe6e9;
+    position: relative; /* 新增定位上下文 */
+}
+
+button {
+    padding: 10px 18px;  /* 增大按钮尺寸 */
+    background-color: #2c3e50;  /* 改为深蓝灰色 */
+    color: white;
+    border: none;
+    border-radius: 6px;  /* 增大圆角 */
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;  /* 添加平滑过渡 */
+    letter-spacing: 0.5px;  /* 增加字母间距 */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);  /* 添加微妙阴影 */
+}
+
+button:hover {
+    background-color: #34495e;  /* 悬停颜色加深 */
+    transform: translateY(-1px);  /* 添加悬停浮动效果 */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* 新增：主要操作按钮特殊样式 */
+#zoomIn, #zoomOut, #resetZoom, #exportXML {
+    background-color: #3498db;  /* 科技蓝 */
+    border: 1px solid #2980b9;
+}
+/* 修改位置：方向按钮特殊样式 */
+#panUp, #panDown, #panLeft, #panRight {
+    padding: 8px 12px;  /* 方向按钮稍小 */
+    background-color: #95a5a6;  /* 石灰色 */
+    min-width: 40px;
+    border-radius: 20px;  /* 圆形按钮 */
+}
+#toggleDraw, #clearDraw {
+    background-color: #27ae60;  /* 翠绿色 */
+    border: 1px solid #219a52;
+}
+#exportXML {
+    background-color: #9b59b6;  /* 紫色 */
+    border: 1px solid #8e44ad;
+    margin-left: auto;  /* 右侧对齐 */
+}
+
+.image-container {
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    background-color: #333;
+    position: relative;
+}
+
+#svsCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: move;
+}
+
+#drawCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+    /* 添加抗锯齿 */
+    image-rendering: -moz-crisp-edges;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+    image-rendering: pixelated;
+}
+
+.draw-controls input[type="color"] {
+    height: 30px;
+    padding: 2px;
+}
+
+/* style.css */
+/* 在原有样式基础上新增 */
+.draw-controls input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+
+/* style.css 新增样式 */
+.group-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.group-item {
+    padding: 12px;
+    margin-bottom: 8px;
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    display: flex;       /* 新增flex布局 */
+    flex-direction: column; /* 垂直排列 */
+    gap: 8px;           /* 子元素间距 */
+}
+
+/* 新增：主内容行样式 */
+.group-item > div:first-child {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.group-color {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+}
+
+/* style.css 新增 */
+.group-item.active-group {
+    border: 2px solid #4CAF50;
+    background: #e8f5e9;
+}
+
+.select-group-btn { background-color: #2196F3 !important; }
+
+/* 添加激活状态样式 */
+.active-group {
+    border: 2px solid #4CAF50;
+    background-color: #e8f5e9 !important;
+}
+
+/* 调整删除按钮样式 */
+.delete-group-btn {
+    background-color: #ff4444 !important;
+}
+.delete-group-btn:hover {
+    background-color: #cc0000 !important;
+}
+
+/* style.css 新增撤回按钮样式 */
+.undo-group-btn {
+    background-color: #FF9800 !important;
+}
+.undo-group-btn:hover {
+    background-color: #f57c00 !important;
+}
+
+/* style.css 新增标题样式 */
+.group-title {
+    margin-right: 10px;
+    min-width: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* style.css 修改分组项布局 */
+.group-item {
+    padding: 12px;
+    margin-bottom: 8px;
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+
+
+/* 右侧按钮容器 */
+.group-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;  /* 新增右侧对齐 */
+    flex-shrink: 0;
+}
+
+/* 调整具体按钮样式 */
+.group-item input[type="checkbox"] {
+    margin: 0 8px 0 0; /* 与标题保留间距 */
+    cursor: pointer;
+}
+
+.select-group-btn {
+    order: 1; /* 选择按钮在前 */
+    min-width: 60px;
+}
+
+.undo-group-btn {
+    order: 2; /* 撤回按钮居中 */
+    min-width: 60px;
+}
+
+.delete-group-btn {
+    order: 3; /* 删除按钮在后 */
+    min-width: 60px;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    .group-item {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .group-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+    
+    .contour-list {
+        margin-top: 8px;
+        padding-top: 6px;
+    }
+}
+/* 轮廓列表样式 */
+.contour-list {
+    max-height: 240px; /* 8条*30px */
+    overflow-y: auto;
+    overflow-x: hidden; /* 新增：隐藏横向滚动条 */
+    scrollbar-width: thin;
+    scrollbar-color: #c1c1c1 #f0f0f0;
+}
+/* 滚动条轨道 */
+.contour-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.contour-list::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 3px;
+}
+
+/* 滚动条滑块 */
+.contour-list::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.contour-list::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+.contour-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 8px;
+    margin: 4px 0;
+    background: #f8f8f8;
+    border-radius: 4px;
+}
+
+.contour-name {
+    flex-grow: 1;
+    margin-right: 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.delete-contour-btn {
+    background: none;
+    border: none;
+    color: #ff4444;
+    cursor: pointer;
+    padding: 2px 5px;
+}
+
+.delete-contour-btn:hover {
+    background: #ffecec;
+}
+/* 添加模式提示 */
+.mode-indicator {
+    /* 移除固定定位 */
+    position: static;
+    padding: 6px 12px;
+    background: #4CAF50;
+    color: white;
+    border-radius: 4px;
+    font-size: 14px;
+    margin-left: 10px;  /* 添加间距 */
+    white-space: nowrap;  /* 防止换行 */
+}
+/* 在原有轮廓项样式后添加 */
+.contour-item:hover {
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transform: translateX(3px);
+    transition: all 0.2s ease;
+}
+/* 轮廓可见性复选框样式 */
+.contour-visible {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.contour-item:hover .contour-visible {
+    accent-color: #4CAF50; /* 悬停时改变复选框颜色 */
+}
+/* 在按钮样式区域添加 */
+.export-group-btn {
+    background-color: #9C27B0 !important;
+}
+.export-group-btn:hover {
+    background-color: #7b1fa2 !important;
+}
+/* 确保导出按钮颜色 */
+.export-group-btn {
+    background-color: #9c27b0 !important;
+}
+.export-group-btn:hover {
+    background-color: #7b1fa2 !important;
+}
+/* 导出覆盖层样式 */
+.export-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 9999;
+}
+
+.export-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 30px 40px;
+    border-radius: 8px;
+    text-align: center;
+    min-width: 300px;
+}
+
+.export-progress {
+    height: 20px;
+    background: #eee;
+    border-radius: 10px;
+    margin: 15px 0;
+    position: relative;
+}
+
+#exportProgressBar {
+    height: 100%;
+    width: 0%;
+    background: #4CAF50;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+}
+
+#exportPercentage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #333;
+    font-weight: bold;
+}
+
+.export-complete-btn {
+    padding: 8px 25px;
+    background: #2196F3 !important;
+    cursor: not-allowed;
+}
+
+.export-complete-btn:not(:disabled) {
+    cursor: pointer;
+    background: #4CAF50 !important;
+}
+/* 新增导出按钮右对齐 */
+.export-right {
+    margin-left: auto !important;
+    order: 999; /* 确保在最右侧 */
+}
+#exportXML.export-right {
+    margin-left: auto !important; /* 强制右侧对齐 */
+    order: 999; /* 确保顺序最后 */
+    /* 移除旧版可能冲突的定位属性 */
+}
+#birdViewBtn {
+    background-color: #2c3e50; /* 深蓝灰色 */
+    border: 1px solid #34495e; /* 悬停加深色 */
+    order: 0; /* 保持在最左侧 */
+}
+
+/* 保持悬停效果与其他按钮一致 */
+#birdViewBtn:hover {
+    background-color: #34495e;
+    transform: translateY(-1px);
+}
+/* 新增鸟瞰图样式 */
+.overview-container {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 200px;  /* 保持固定宽度 */
+    height: auto;  /* 改为自适应高度 */
+    border: 2px solid #3498db;
+    border-radius: 0;
+    background: #333;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    display: none;
+    padding: 0;
+}
+
+#overviewCanvas {
+    width: 100%;
+    height: 100%;
+}
+
+#viewportIndicator {
+    position: absolute;  /* 改为绝对定位 */
+    top: 0;             /* 对齐左上角 */
+    left: 0;            /* 对齐左上角 */
+    border: 2px solid #e74c3c;
+    background: rgba(231, 76, 60, 0.2);
+    pointer-events: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 4px rgba(0,0,0,0.3);
+    margin: 0;          /* 新增：清除外边距 */
+}
+/* 在按钮样式区域添加 */
+button:disabled {
+    background-color: #95a5a6 !important;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+/* style.css 在button:disabled样式后添加 */
+#createGroup:disabled {
+    background-color: #bdc3c7 !important; /* 浅灰色 */
+    opacity: 0.6;
+    cursor: not-allowed;
+}
